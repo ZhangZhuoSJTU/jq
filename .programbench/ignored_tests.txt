@@ -1,0 +1,724 @@
+5142c79c4513/eval.tests.test_args_and_files
+5142c79c4513/eval.tests.test_cli_basics
+5142c79c4513/eval.tests.test_filters_and_io
+5142c79c4513/eval.tests.test_streaming
+59bfd1b6df69/eval.tests.test_help_usage.test_dash_h_matches_dash_dash_help_exactly
+59bfd1b6df69/eval.tests.test_help_usage.test_executable_exists_and_is_executable
+59bfd1b6df69/eval.tests.test_help_usage.test_help_contains_no_ansi_escape_codes_by_default
+59bfd1b6df69/eval.tests.test_help_usage.test_help_ends_with_newline
+59bfd1b6df69/eval.tests.test_help_usage.test_help_exits_zero
+59bfd1b6df69/eval.tests.test_help_usage.test_help_goes_to_stdout
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["!()&lt;&gt;&amp;&apos;&quot;\\t"-"%21%28%29%3C%3E%26%27%22%09"-"!()<>&'\\"\\t"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[""-","-",,"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[""--# regression tests for #3413]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["'!()<>&'\\\\''\\"\\t'"-"ISgpPD4mJyIJ"-"!()<>&'\\"\\t"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[",a"--try join(",") catch .]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["Aa\\r\\n\\t\\b\\f\\u03bc"-null-"Aa\\u000d\\u000a\\u0009\\u0008\\u000c\\u03bc"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["Cannot index number with string \\"b\\""-"Cannot index object with number"-{"a":[{"b":5}]}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["Invalid numeric literal at EOF at line 1, column 6 (while parsing 'NaN100')"-"Invalid numeric literal at EOF at line 1, column 7 (while parsing 'NaN1000')"-"Invalid numeric literal at EOF at line 1, column 8 (while parsing 'NaN10000')"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["Invalid numeric literal at EOF at line 1, column 9 (while parsing 'NaN100000')"--# calling input/0, or debug/0 in a test doesn't crash jq]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["\\"!()<>&'\\\\\\"\\\\t\\""-"1,\\"!()<>&'\\"\\"\\t\\""-"1\\t!()<>&'\\"\\\\t"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["a/b/c/d"--[.[]|join("a")]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["abc\\u0009\\u000A\\u000B\\u000C\\u000D\\u0020\\u0085\\u00A0\\u1680\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200A\\u2028\\u2029\\u202F\\u205F\\u3000"-"\\u0009\\u000A\\u000B\\u000C\\u000D\\u0020\\u0085\\u00A0\\u1680\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200A\\u2028\\u2029\\u202F\\u205F\\u3000abc"-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["caught outside ho"--.[]|(try . catch (if .=="ho" then "BROKEN"|error else empty end)) | if .=="ho" then error else "\\(.) there!" end]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["number (0) cannot be parsed as a boolean"-"string (\\"tru\\") cannot be parsed as a boolean"-"string (\\"truee\\") cannot be parsed as a boolean"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["object ({}) cannot be parsed as a boolean"--[{"a":42},.object,10,.num,false,true,null,"b",[1,4]] | .[] as $x | [$x == .[]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["ok"--try ltrimstr("x") catch "x", try rtrimstr("x") catch "x" | "ok"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["string (\\"fals\\") cannot be parsed as a boolean"-"string (\\"falsee\\") cannot be parsed as a boolean"-"array ([]) cannot be parsed as a boolean"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["string (\\"xx\u2606\u2606...) cannot be negated"-"string (\\"xxxx\u2606\u2606...) cannot be negated"-"string (\\"xxxxxx\u2606...) cannot be negated"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["string (\\"xxxxxxxx...) cannot be negated"-"string (\\"xxxxxxxxxx...) cannot be negated"-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["trim input must be a string"-"trim input must be a string"-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq["x" * range(0; 12; 2) + "\u2606" * 5 | try -. catch .-null-"string (\\"\u2606\u2606\u2606...) cannot be negated"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[%%FAIL IGNORE MSG-import "syntaxerror" as e; .-jq: error: syntax error, unexpected ';', expecting end of file at tests/modules/syntaxerror/syntaxerror.jq, line 1, column 4:\n    wat;\n       ^]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[(.. | select(type == "object" and has("b") and (.b | type) == "array")|.b) |= .[0]-{"a": {"b": [1, {"b": 3}]}}-{"a": {"b": 1}}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[(1e999999999, 10e999999999) > (1e-1147483646, 0.1e-1147483646)-null-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[(sort_by(.b) | sort_by(.a)), sort_by(.a, .b), sort_by(.b, .c), group_by(.b), group_by(.a + .b - .c == 2)-[{"a": 1, "b": 4, "c": 14}, {"a": 4, "b": 1, "c": 3}, {"a": 1, "b": 4, "c": 3}, {"a": 0, "b": 2, "c": 43}]-[{"a": 0, "b": 2, "c": 43}, {"a": 1, "b": 4, "c": 14}, {"a": 1, "b": 4, "c": 3}, {"a": 4, "b": 1, "c": 3}]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[-4--bsearch({x:1})]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[. as {as: $kw, "str": $str, ("e"+"x"+"p"): $exp} | [$kw, $str, $exp]-{"as": 1, "str": 2, "exp": 3}-[1, 2, 3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.+4-15-19.0]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.-"Aa\\r\\n\\t\\b\\f\\u03bc"-"Aa\\u000d\\u000a\\u0009\\u0008\\u000c\\u03bc"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[0].a |= {"old":., "new":(.+1)}-[{"a":1,"b":2}]-[{"a":{"old":1, "new":2},"b":2}]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[2:4] = ([], ["a","b"], ["a","b","c"])-[0,1,2,3,4,5,6,7]-[0,1,4,5,6,7]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[2][3] = 1-[4]-[4, null, [null, null, null, 1]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] += 2, .[] *= 2, .[] -= 2, .[] /= 2, .[] %=2-[1,3,5]-[3,5,7]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as $a ?// {a:$a} ?// {a:$a} | $a-[[3],[4],[5],6]-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as $n | $n+0 | [., tostring, . == $n]-[-9007199254740993, -9007199254740992, 9007199254740992, 9007199254740993, 13911860366432393]-[-9007199254740992,"-9007199254740992",true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as [$a, $b] | [$b, $a]-[[1], [1, 2, 3]]-[null, 1]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as [$x, $y] | try ["ok", ($x | ltrimstr($y))] catch ["ko", .]-[["hi",1],[1,"hi"],["hi","hi"],[1,1]]-["ko","startswith() requires string inputs"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as [$x, $y] | try ["ok", ($x | rtrimstr($y))] catch ["ko", .]-[["hi",1],[1,"hi"],["hi","hi"],[1,1]]-["ko","endswith() requires string inputs"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as {a:$a} ?// $a ?// {a:$a} | $a-[[3],[4],[5],6]-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as {a:$a} ?// {a:$a} ?// $a | $a-[[3],[4],[5],6]-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] as {a:$a} ?// {a:$a} ?// {a:$a} | $a-[[3],[4],[5],6]-# Runtime error: "jq: Cannot index array with string \\"c\\""]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | . as $a ?// {a:$a} ?// {a:$a} | $a-[[3],[4],[5],6]-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | . as {$a, b: [$c, {$d}]} ?// [$a, {$b}, $e] ?// $f | [$a, $b, $c, $d, $e, $f]-[{"a":1, "b":[2,{"d":3}]}, [4, {"b":5, "c":6}, 7, 8, 9], "foo"]-[1, null, 2, 3, null, null]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | . as {a:$a} ?// $a ?// {a:$a} | $a-[[3],[4],[5],6]-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | . as {a:$a} ?// {a:$a} ?// $a | $a-[[3],[4],[5],6]-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | . as {a:$a} ?// {a:$a} ?// {a:$a} | $a-[[3],[4],[5],6]-# Runtime error: "jq: Cannot index array with string \\"c\\""]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | .error = "no, it's OK"-[{"error":true}]-{"error": "no, it's OK"}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | [.[0] and .[1], .[0] or .[1]]-[[true,[]], [false,1], [42,null], [null,false]]-[true,true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | join(",")-[["a",null], [null,"a"]]-"a,"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | join(",")-[[], [null], [null,null], [null,null,null]]-""]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | try (fromjson | isnan) catch .-["NaN","-NaN","NaN1","NaN10","NaN100","NaN1000","NaN10000","NaN100000"]-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | try (getpath(["a",0,"b"]) |= 5) catch .-[null,{"b":0},{"a":0},{"a":null},{"a":[0,1]},{"a":{"b":1}},{"a":[{}]},{"a":[{"c":3}]}]-{"a":[{"b":5}]}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | try error catch .-[1,null,2]-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] | try toboolean catch .-[null,0,"tru","truee","fals","falsee",[],{}]-"null (null) cannot be parsed as a boolean"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[] |= try tonumber-["1", "2a", "3", " 4", "5 ", "6.7", ".89", "-876", "+5.43", 21]-[1, 3, 6.7, 0.89, -876, 5.43, 21]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.[]-[1,2,3]-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.e0, .E1, .E-1, .E+1-{"e0": 1, "E1": 2, "E": 3}-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.foo = .bar-{"bar":42}-{"foo":42, "bar":42}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.foo |= .+1-{"foo": 42}-{"foo": 43}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.foo[2].bar = 1-{"foo":[11], "bar":42}-{"foo":[11,null,{"bar":1}], "bar":42}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[.message = "goodbye"-{"message": "hello"}-{"message": "goodbye"}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[0-1-2]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[1+1-"wtasdf"-2.0]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[1, try error(2), 3-null-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[1,1-[]-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[1--1,.]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[1-null-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[105.0--def f: (1000,2000); f]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[123412345-1000-2000]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[1e+0+0.001e3-"I wonder what this will be?"-20e-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[2-2-4]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[2-3-0]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[2-3-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[3--1 + try 2 catch 3 + 4]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[3-2-4]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[3-null-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[5E500000000 > 5E-5000000000, 10000E500000000 > 10000E-5000000000-null-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[9.999999999E+999999999-1E-999999999-1E-999999999]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[9E999999999, 9999999999E999999990, 1E-999999999, 0.000000001E-999999990-null-9E+999999999]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[@text,@json,([1,.]|@csv,@tsv),@html,(@uri|.,@urid),@sh,(@base64|.,@base64d)-"!()<>&'\\"\\t"-"!()<>&'\\"\\t"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[@urid-"%CE%BC"-"\\u03bc"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[["", "", "", "a", "a ", "abc", "abc  ", "abc", "abc  "]-["", "", "", "a", " a", "abc", "  abc", "  abc", "abc"]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[["1","2",{"a":{"b":{"c":33}}}]-"string (\\"1,2,\\") and object ({\\"a\\":{\\"b\\":{...) cannot be added"-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[["foo", 1]--path(.[] | select(.>3))]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[["foo",1] as $p | getpath($p), setpath($p; 20), delpaths([$p])-{"bar": 42, "foo": ["a", "b", "c", "d"]}-"b"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[["foo",1] as $p | getpath($p), setpath($p; 20), delpaths([$p])-{"bar":false}-null]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[["hi","ho"]-"hi there!"-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[("foo" | contains("foo")), ("foobar" | contains("foo")), ("foo" | contains("foobar"))]-{}-[true, true, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[({foo: 12, bar:13} | contains({foo: 12})), ({foo: 12} | contains({})), ({foo: 12, bar:13} | contains({baz:14}))]-{}-[true, true, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7]-[0,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,0]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[-9007199254740992,"-9007199254740992",true]-[9007199254740992,"9007199254740992",true]-[9007199254740992,"9007199254740992",true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[3:2], .[-5:4], .[:-2], .[-2:], .[3:3][1:], .[10:]]-[0,1,2,3,4,5,6]-[[], [2,3], [0,1,2,3,4], [5,6], [], []]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[] * 3]-["a", "ab", "abc"]-["aaa", "ababab", "abcabcabc"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[] | [.foo[] // .bar]]-[{"foo":[1,2], "bar": 42}, {"foo":[1], "bar": null}, {"foo":[null,false,3], "bar": 18}, {"foo":[], "bar":42}, {"foo": [null,false,null], "bar": 41}]-[[1,2], [1], [3], [42], [41]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[]|endswith("foo")]-["fo", "foo", "barfoo", "foobar", "barfoob"]-[false, true, true, false, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[]|floor]-[-1.1,1.1,1.9]-[-2, 1, 1]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[]|ltrimstr("")]-["a", "xx", ""]-["a", "xx", ""]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[]|rtrimstr("")]-["a", "xx", ""]-["a", "xx", ""]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[]|startswith("foo")]-["fo", "foo", "barfoo", "foobar", "barfoob"]-[false, true, false, true, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[.[]|trimstr("")]-["a", "xx", ""]-["a", "xx", ""]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[0,1,"a","b",4,5,6,7]-[0,1,"a","b","c",4,5,6,7]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[0,1,2,[3]]-[0,1,[2],[[3]]]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[0]-0-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[1, {c:3, d:4}] as [$a, {c:$b, b:$c}] | $a, $b, $c-null-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[1,1,1]--[.[] % 7]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[1,2,3][] as $x | [[4,5,6,7][$x]]-null-[5]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[1,2,5,3,5,3,1,3]-[1,2,3,5]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[1,5,3]-[1]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[10 * 20, 20 / .]-4-[200, 5]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[13911860366432392,"13911860366432392",true]--# abs, fabs, length]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[16 / 4 / 2, 16 / 4 * 2, 16 - 4 - 2, 16 - 4 + 2]-null-[2, 8, 10, 14]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[2, 1]--. as $i | . as [$i] | $i]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[2,6,10]-[-1,1,3]-[0.5, 1.5, 2.5]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4, 5, null, null, 7, null]-[null, null, null, null, null, "foo"]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_0]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_10]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_11]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_2]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_3]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_4]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_5]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_6]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_7]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_8]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[4]-[5]-6_9]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[6]-[7]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[0,null,42], [0,1,42], [0,1,42]]-[[0], [0,1], [0,1]]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[1,2,3],42]-[[1,2,3,42]]-[1,2,3,42,42]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[20,10][1,0] as $x | def f: (100,200) as $y | def g: [$x + $y, .]; . + $x | g; f[0] | [f][0][1] | f]-999999999-[[110.0, 130.0], [210.0, 130.0], [110.0, 230.0], [210.0, 230.0], [120.0, 160.0], [220.0, 160.0], [120.0, 260.0], [220.0, 260.0]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6] | .[] as $a ?// {a:$a} ?// {a:$a} | $a-null-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6] | .[] as {a:$a} ?// $a ?// {a:$a} | $a-null-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6] | .[] as {a:$a} ?// {a:$a} ?// $a | $a-null-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6] | .[] as {a:$a} ?// {a:$a} ?// {a:$a} | $a-null-# Runtime error: "jq: Cannot index array with string \\"c\\""]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6][] | . as $a ?// {a:$a} ?// {a:$a} | $a-null-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6][] | . as {a:$a} ?// $a ?// {a:$a} | $a-null-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6][] | . as {a:$a} ?// {a:$a} ?// $a | $a-null-[3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[3],[4],[5],6][] | . as {a:$a} ?// {a:$a} ?// {a:$a} | $a-null-# Runtime error: "jq: Cannot index array with string \\"c\\""]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[], {}, [1,2], {"a":42}, "asdf", "\\u03bc"]-[0, 0, 2, 1, 4, 1]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[],[""],["",""],["","",""]]-["","","a","aa"]-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[[{"a": 1, "b": 4, "c": 14}, {"a": 0, "b": 2, "c": 43}], [{"a": 4, "b": 1, "c": 3}, {"a": 1, "b": 4, "c": 3}]]--unique]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[contains(""), contains("\\u0000")]-"\\u0000"-[true, true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[contains(""), contains("a"), contains("ab"), contains("c"), contains("d")]-"ab\\u0000cd"-[true, true, true, true, true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[contains("@"), contains("\\u0000@"), contains("\\u0000what")]-"ab\\u0000cd"-[false, false, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[contains("b\\u0000c"), contains("b\\u0000cd"), contains("b\\u0000cd")]-"ab\\u0000cd"-[true, true, true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[contains("cd"), contains("b\\u0000"), contains("ab\\u0000")]-"ab\\u0000cd"-[true, true, true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[false, false, false, false, false, false, false, false, true ]--[.[] | length]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[false, false, false, false, false, true,  false, false, false]-[false, false, false, false, false, false, true,  false, false]-[false, false, false, false, false, false, false, true,  false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[false, false, true,  true,  false, false, false, false, false]-[false, false, true,  true,  false, false, false, false, false]-[false, false, false, false, true,  false, false, false, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[false,true]-[false,true]-[false,false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[foreach .[] as {a:$a} (0; . + $a; -.)]-[{"a":1}, {"b":2}, {"a":3, "b":4}]-[-1, -1, -4]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[range(0,1;3,4)]-null-[0,1,2, 0,1,2,3, 1,2, 1,2,3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[range(0,1;4,5;1,2)]-null-[0,1,2,3,0,2, 0,1,2,3,4,0,2,4, 1,2,3,1,3, 1,2,3,4,1,3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[{ "x": 0 },{ "x": 1 },{ "x": 2 }]-1-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[{"a": 0, "b": 2, "c": 43}, {"a": 1, "b": 4, "c": 14}, {"a": 1, "b": 4, "c": 3}, {"a": 4, "b": 1, "c": 3}]-[{"a": 4, "b": 1, "c": 3}, {"a": 0, "b": 2, "c": 43}, {"a": 1, "b": 4, "c": 3}, {"a": 1, "b": 4, "c": 14}]-[[{"a": 4, "b": 1, "c": 3}], [{"a": 0, "b": 2, "c": 43}], [{"a": 1, "b": 4, "c": 14}, {"a": 1, "b": 4, "c": 3}]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[[{a:1}] | .[] | .a=999-null-{"a": 999}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[bsearch(0,1,2,3,4)-[1,2,3]--1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[def f(x): x | x; f([.], . + [42])-[1,2,3]-[[[1,2,3]]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[def f: . + 1; def g: def g: . + 100; f | g | f; (f | g), g-3.0-106.0]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[def id(x):x; 2000 as $x | def f(x):1 as $x | id([$x, x, x]); def g(x): 100 as $x | f($x,$x+x); g($x)-"more testing"-[1,100,2100.0,100,2100.0]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[del(.), del(empty), del((.foo,.bar,.baz) | .[2,3,0]), del(.foo[0], .bar[0], .foo, .baz.bar[0].x)-{"foo": [0,1,2,3,4], "bar": [0,1]}-null]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[del(.[1], .[-6], .[2], .[-3:9])-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]-[0, 3, 5, 6, 9]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[false--IN(range(10;20); range(10))]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[false-false-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[flatten(0)-[0, [1], [[2]], [[[3]]]]-[0, [1], [[2]], [[[3]]]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[flatten(2)-[0, [1, [2]], [1, [[3], 2]]]-[0, 1, 2, 1, [3], 2]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[flatten(2)-[0, [1], [[2]], [[[3]]]]-[0, 1, 2, [3]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[flatten(3,2,1)-[0, [1], [[2]], [[[3]]]]-[0,1,2,3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[flatten-[0, [1], [[2]], [[[3]]]]-[0, 1, 2, 3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[foreach .[] as $x (0, 1; . + $x)-[1, 2]-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[from_entries-[{"key":"a", "value":1}, {"Key":"b", "Value":2}, {"name":"c", "value":3}, {"Name":"d", "Value":4}]-{"a": 1, "b": 2, "c": 3, "d": 4}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[import "a" as foo; import "b" as bar; def fooa: foo::a; [fooa, bar::a, bar::b, foo::a]-null-["a","b","c","a"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[import "c" as foo; [foo::a, foo::c]-null-[0,"acmehbah"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[import "data" as $a; import "data" as $b; def f: {$a, $b}; f-null-{"a":[{"this":"is a test","that":"is too"}],"b":[{"this":"is a test","that":"is too"}]}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[import "data" as $e; import "data" as $d; [$d[].this,$e[].that,$d::d[].this,$e::e[].that]|join(";")-null-"is a test;is too;is a test;is too"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[import "shadow1" as f; import "shadow2" as f; import "shadow1" as e; [e::e, f::e]-null-[2,3]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[import "test_bind_order" as check; check::check-null-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[include "c"; [a, c]-null-[0,"acmehbah"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[include "shadow1"; e-null-2]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[include "shadow1"; include "shadow2"; e-null-3]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[join(",","/")-["a","b","c","d"]-"a,b,c,d"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(. == 1)-[1, 1.0, 1.000, 100e-2, 1e+0, 0.0001e4]-[true, true, true, true, true, true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(.[1] as $needle | .[0] | contains($needle))-[[["foobar", "foobaz"], ["baz", "bar"]], [["foobar", "foobaz"], ["foo"]], [["foobar", "foobaz"], ["blap"]]]-[true, true, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(.[1] as $needle | .[0] | contains($needle))-[[[],[]], [[1,2,3], [1,2]], [[1,2,3], [3,1]], [[1,2,3], [4]], [[1,2,3], [1,4]]]-[true, true, true, false, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map([1,2][0:.])-[-1, 1, 2, 3, 1000000000000000000]-[[1], [1], [1,2], [1,2], [1,2]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(abs)-[-0, 0, -10, -1.1]-[0,0,10,1.1]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(abs)-[0.1,1000000000000000002]-[1e-1, 1000000000000000002]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(add)-[[], [1,2,3], ["a","b","c"], [[3],[4,5],[6]], [{"a":1}, {"b":2}, {"a":3}]]-[null, 6, "abc", [3,4,5,6], {"a":3, "b": 2}]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(delpaths([[0,"foo"]]))-[[{"foo":2, "x":1}], [{"bar":2}]]-[[{"x":1}], [{"bar":2}]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(getpath([2])), map(setpath([2]; 42)), map(delpaths([[2]]))-[[0], [0,1], [0,1,2]]-[null, null, 2]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(has("foo"))-[{"foo": 42}, {}]-[true, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(has(2))-[[0,1], ["a","b","c"]]-[false, true]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(keys)-[{}, {"abcd":1,"abc":2,"abcde":3}, {"x":1, "z": 3, "y":2}]-[[], ["abc","abcd","abcde"], ["x","y","z"]]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[map(trim), map(ltrim), map(rtrim)-[" \\n\\t\\r\\f\\u000b", "","  ", "a", " a ", "abc", "  abc  ", "  abc", "abc  "]-["", "", "", "a", "a", "abc", "abc", "abc", "abc"]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[modulemeta | .defs | length-"c"-2]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[modulemeta | .deps | length-"c"-6]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[modulemeta-"c"-{"whatever":null,"deps":[{"as":"foo","is_data":false,"relpath":"a"},{"search":"./","as":"d","is_data":false,"relpath":"d"},{"search":"./","as":"d2","is_data":false,"relpath":"d"},{"search":"./../lib/jq","as":"e","is_data":false,"relpath":"e"},{"search":"./../lib/jq","as":"f","is_data":false,"relpath":"f"},{"as":"d","is_data":true,"relpath":"data"}],"defs":["a/0","c/0"]}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[null,1,null-"hello"-null]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[null-2-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[null-7-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[null-false-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[null-false-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[path(.foo[0,1])-null-["foo", 0]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[range(10;12)|IN(range(10))-null-false]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[range(5;10)|IN(range(10))-null-true]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[strflocaltime("" | ., @uri)-0-""]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[to_entries-{"a": 1, "b": 2}-[{"key":"a", "value":1}, {"key":"b", "value":2}]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[trim, ltrim, rtrim-"\\u0009\\u000A\\u000B\\u000C\\u000D\\u0020\\u0085\\u00A0\\u1680\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200A\\u2028\\u2029\\u202F\\u205F\\u3000abc\\u0009\\u000A\\u000B\\u000C\\u000D\\u0020\\u0085\\u00A0\\u1680\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200A\\u2028\\u2029\\u202F\\u205F\\u3000"-"abc"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[true-"Invalid numeric literal at EOF at line 1, column 4 (while parsing 'NaN1')"-"Invalid numeric literal at EOF at line 1, column 5 (while parsing 'NaN10')"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[true--# #2825]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[true--range(5;13)|IN(range(0;10;3))]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[try (["hi","ho"]|.[]|(try . catch (if .=="ho" then "BROKEN"|error else empty end)) | if .=="ho" then error else "\\(.) there!" end) catch "caught outside \\(.)"-null-"hi there!"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[try ltrimstr(1) catch "x", try rtrimstr(1) catch "x" | "ok"-"hi"-"ok"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[try trim catch ., try ltrim catch ., try rtrim catch .-123-"trim input must be a string"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[with_entries(.key |= "KEY_" + .)-{"a": 1, "b": 2}-{"KEY_a": 1, "KEY_b": 2}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"a",b,"a$\\(1+1)"}-{"a":1, "b":2, "c":3, "a$2":4}-{"a":1, "b":2, "a$2":4}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"a": {"b": 1}, "c": {"d": 2}, "e": 5} * .-{"a": {"b": 2}, "c": {"d": 3, "f": 9}}-{"a": {"b": 2}, "c": {"d": 3, "f": 9}, "e": 5}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"a":1} + {"b":2} + {"c":3}-"asdfasdf"-{"a":1, "b":2, "c":3}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"a":[{"c":3,"b":5}]}--# #2051, deletion using assigning empty against arrays]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"b":0,"a":[{"b":5}]}-"Cannot index number with number"-{"a":[{"b":5}]}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"bar": 42, "foo": ["a", 20, "c", "d"]}-{"bar": 42, "foo": ["a", "c", "d"]}-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"bar":false, "foo": [null, 20]}-{"bar":false}-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"foo": [0,1,2,3,4], "bar": [0,1]}-{"foo": [1,4], "bar": [1]}-{"bar": [1]}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"hey":[]}-"ok"-"ok"]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"k": {"a": 1, "b": 2}, "hello": 1} * .-{"k": {"a": 0,"c": 3}, "hello": {"x": 1}}-{"k": {"a": 0, "b": 2, "c": 3}, "hello": {"x": 1}}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"k": {"a": 1, "b": 2}, "hello": {"x": 1}} * .-{"k": {"a": 0,"c": 3}, "hello": 1}-{"k": {"a": 0, "b": 2, "c": 3}, "hello": 1}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"k": {"a": 1, "b": 2}} * .-{"k": {"a": 0,"c": 3}}-{"k": {"a": 0, "b": 2, "c": 3}}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"object": {"a":42}, "num":10.0}-[true,  true,  false, false, false, false, false, false, false]-[true,  true,  false, false, false, false, false, false, false]]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{"x":-1}-{"x":1}-]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{a,b,(.d):.a,e:.b}-{"a":1, "b":2, "c":3, "d":"c"}-{"a":1, "b":2, "c":1, "e":2}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{foo: "bar"} | .foo |= .?-null-{"foo": "bar"}]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{x: (1,2)},{x:3} | .x-null-1]
+6321df1bd94e/tests.test_upstream_jq.test_upstream_jq[{x:-1},{x:-.},{x:-.|abs}-1-{"x":-1}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq["1"-"[1]"-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq["XML"--(. + 2) * 5]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq["\\u03bc"-2-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq["abc "-" abc"-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq["something else"--.user, .projects[]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq["wikiflow"--.[4,2]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[$ENV.PAGER-null-"less"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[(.a, .b) = range(3)-null-{"a":0,"b":0}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[(false, null, 1) | . // 42-null-42]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[(true, false) or false-null-true]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[-1--map(abs)]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[-2:]-["a","b","c","d","e"]-["d", "e"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[0]-[{"name":"JSON", "good":true}, {"name":"XML", "good":false}]-{"name":"JSON", "good":true}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[2:4]-["a","b","c","d","e"]-["c", "d"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[:3]-["a","b","c","d","e"]-["a", "b", "c"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] == 1-[1, 1.0, "1", "banana"]-true]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] as [$a, $b] | {a: $a, b: $b}-[[0], [0, 1], [2, 1, 0]]-{"a":0,"b":null}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] as {$a, $b, c: {$d, $e}} ?// {$a, $b, c: [{$d, $e}]} | {$a, $b, $d, $e}-[{"a": 1, "b": 2, "c": {"d": 3, "e": 4}}, {"a": 1, "b": 2, "c": [{"d": 3, "e": 4}]}]-{"a":1,"b":2,"d":3,"e":4}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | (1 / .)?-[1,0,-1]-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | (infinite * .) < 0-[-1, 1]-true]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | .name-[{"name":"JSON", "good":true}, {"name":"XML", "good":false}]-"JSON"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | in({"foo": 42})-["foo", "bar"]-true]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | length-[[1,2], "string", {"a":2}, null, -5]-2]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | select(.id == "second")-[{"id": "first", "val": 1}, {"id": "second", "val": 2}]-{"id": "second", "val": 2}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | tonumber-[1, "1"]-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[] | tostring-[1, "1", [1]]-"1"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.[]-[{"name":"JSON", "good":true}, {"name":"XML", "good":false}]-{"name":"JSON", "good":true}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.foo += 1-{"foo": 42}-{"foo": 43}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[.foo, .bar-{"foo": 42, "bar": "something else", "baz": true}-42]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[0-[1]-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[1, empty, 2-null-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[1--.[] | toboolean]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[1-15-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[15--foreach .[] as $item (0; . + $item; [$item, . * 2])]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[2--[1,2,empty,3]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[3--.[]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[3--[range(2; 4)]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[3-6-10]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[3-6-9]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[4-16-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[42-1-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[5--utf8bytelength]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[6-1-0]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[ .[] | . * 2]-[1, 2, 3]-[2, 4, 6]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[["a","b","c","d","e"]-"e"-"c"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[["true", "false", true, false]-true-false]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[-10, -1.1, -1e-1]-[10,1.1,1e-1]-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[.[] | .a?]-[{}, true, {"a":1}]-[null, 1]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[.[] | tonumber?]-["1", "invalid", "3", 4]-[1, 3, 4]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[.[]|endswith("foo")]-["foobar", "barfoo"]-[false, true]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[.[]|startswith("foo")]-["fo", "foo", "barfoo", "foobar", "barfoob"]-[false, true, false, true, false]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[.[]|try .a]-[{}, true, {"a":1}]-[null, 1]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[.user, .projects[]]-{"user":"stedolan", "projects": ["jq", "wikiflow"]}-["stedolan", "jq", "wikiflow"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[0, 1]-[1, 0]-[1, 1]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[1, 4]-[2, 3]-[2, 4]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[1,2,3,4,5]-[1,2]-[2,6]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[2, 0]-[false, true]-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[3,12]-[4,20]-[5,30]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[[0]]--fromstream(1|truncate_stream([[0],"a"],[[1,0],"b"],[[1,0]],[[1]]))]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[]--.foo[]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[getpath(["a","b"], ["a","c"])]-{"a":{"b":0, "c":1}}-[0, 1]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[true, false | not]-null-[false, true]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[[{"a": 1, "b": 2, "c": {"d": 3, "e": 4}}, {"a": 1, "b": 2, "c": [{"d": 3, "e": 4}]}]-{"a":1,"b":2,"d":3,"e":null}-{"a":1,"b":2,"d":null,"e":4}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[combinations(2)-[0, 1]-[0, 0]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[combinations-[[1,2], [3, 4]]-[1, 3]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[def addvalue(f): . + [f]; map(addvalue(.[0]))-[[1,2],[10,20]]-[[1,2,1], [10,20,10]]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[def addvalue(f): f as $x | map(. + $x); addvalue(.[0])-[[1,2],[10,20]]-[[1,2,1,2], [10,20,1,2]]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[def range(init; upto; by): def _range: if (by > 0 and . < upto) or (by < 0 and . > upto) then ., ((.+by)|_range) else empty end; if init == upto then empty elif by == 0 then init else init|_range end; range(0; 10; 3)-null-0]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[del(.foo)-{"foo": 42, "bar": 9001, "baz": 42}-{"bar": 9001, "baz": 42}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[env.PAGER-null-"less"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[false--(true, true) and (true, false)]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[false--infinite, nan | type]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[false--map(in([0,1]))]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[flatten(1)-[1, [2], [[3]]]-[1, 2, [3]]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[flatten-[1, [2], [[3]]]-[1, 2, 3]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[flatten-[{"foo": "bar"}, [{"foo": "baz"}]]-[{"foo": "bar"}, {"foo": "baz"}]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[foreach .[] as $item (0; . + $item)-[1,2,3,4,5]-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[foreach .[] as $item (0; . + 1; {index: ., $item})-["foo", "bar", "baz"]-{"index":1,"item":"foo"}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[from_entries-[{"key":"a", "value":1}, {"key":"b", "value":2}]-{"a": 1, "b": 2}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[group_by(.foo)-[{"foo":1, "bar":10}, {"foo":3, "bar":100}, {"foo":1, "bar":1}]-[[{"foo":1, "bar":10}, {"foo":1, "bar":1}], [{"foo":3, "bar":100}]]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[keys-{"abc": 1, "abcd": 2, "Foo": 3}-["Foo", "abc", "abcd"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[map(has("foo"))-[{"foo": 42}, {}]-[true, false]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[map(has(2))-[[0,1], ["a","b","c"]]-[false, true]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[map(type)-[0, false, [], {}, null, "hello"]-["number", "boolean", "array", "object", "null", "string"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[map_values(.+1)-{"a": 1, "b": 2, "c": 3}-{"a": 2, "b": 3, "c": 4}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[max_by(.foo)-[{"foo":1, "bar":14}, {"foo":2, "bar":3}]-{"foo":2, "bar":3}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[null-"number"-"number"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[null-["b"]-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[null-[1,2,3]-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[null-[2,3]-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[null-true-false]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[range(2; 4)-null-2]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[recurse(. * .; . < 20)-2-2]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[recurse(.foo[])-{"foo":[{"foo": []}, {"foo":[{"foo":[]}]}]}-{"foo":[{"foo":[]},{"foo":[{"foo":[]}]}]}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[recurse-{"a":0,"b":[1]}-{"a":0,"b":[1]}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[setpath(["a","b"]; 1)-null-{"a": {"b": 1}}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[setpath(["a","b"]; 1)-{"a":{"b":0}}-{"a": {"b": 1}}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[sort_by(.foo)-[{"foo":4, "bar":10}, {"foo":3, "bar":10}, {"foo":2, "bar":1}]-[{"foo":2, "bar":1}, {"foo":3, "bar":10}, {"foo":4, "bar":10}]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[sort_by(.foo, .bar)-[{"foo":4, "bar":10}, {"foo":3, "bar":20}, {"foo":2, "bar":1}, {"foo":3, "bar":10}]-[{"foo":2, "bar":1}, {"foo":3, "bar":10}, {"foo":3, "bar":20}, {"foo":4, "bar":10}]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[to_entries-{"a": 1, "b": 2}-[{"key":"a", "value":1}, {"key":"b", "value":2}]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[trim, ltrim, rtrim-" abc "-"abc"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[true-false-0]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[true-false-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[true-false-false]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[truncate_stream([[0],"a"],[[1,0],"b"],[[1,0]],[[1]])-1-[[0],"b"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[unique_by(.foo)-[{"foo": 1, "bar": 2}, {"foo": 1, "bar": 3}, {"foo": 4, "bar": 5}]-[{"foo": 1, "bar": 2}, {"foo": 4, "bar": 5}]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[unique_by(length)-["chunky", "bacon", "kitten", "cicada", "asparagus"]-["bacon", "chunky", "asparagus"]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[with_entries(.key |= "KEY_" + .)-{"a": 1, "b": 2}-{"KEY_a": 1, "KEY_b": 2}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"a": 1, "b": 1}-1-1]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"a":0,"b":1}-{"a":2,"b":1}-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"a":1,"b":1}-{"a":2,"b":2}-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"a":1,"b":2,"d":3,"e":4}--.[] as {$a, $b, c: {$d}} ?// {$a, $b, c: [{$e}]} | {$a, $b, $d, $e}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"foo":[1,2,3]}-1-2]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"index":2,"item":"bar"}-{"index":3,"item":"baz"}-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"k": {"a": 1, "b": 2}} * {"k": {"a": 0,"c": 3}}-null-{"k": {"a": 0, "b": 2, "c": 3}}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"name":"XML", "good":false}--.[]]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"user":"stedolan", "projects": ["jq", "wikiflow"]}-"stedolan"-"jq"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"user":"stedolan", "title": "More JQ"}--{(.user): .titles}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{"user":"stedolan","titles":["JQ Primer", "More JQ"]}-{"stedolan": ["JQ Primer", "More JQ"]}-]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{a: 1} + {b: 2} + {c: 3} + {a: 42}-null-{"a": 42, "b": 2, "c": 3}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_jq[{user, title: .titles[]}-{"user":"stedolan","titles":["JQ Primer", "More JQ"]}-{"user":"stedolan", "title": "JQ Primer"}]
+6321df1bd94e/tests.test_upstream_man.test_upstream_man[$ENV.PAGER-null-"less"]
+6321df1bd94e/tests.test_upstream_man.test_upstream_man[env.PAGER-null-"less"]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["ab,cd, ef"-["ab","cd","ef"]-]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["abaabbaaabbb"-["a","b"]-["aa","bb"]]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["abc abc"-{"offset": 0, "length": 3, "string": "abc", "captures": [{"offset": 0, "length": 3, "string": "abc", "name": null}]}-{"offset": 4, "length": 3, "string": "abc", "captures": [{"offset": 4, "length": 3, "string": "abc", "name": null}]}]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["c"--scan("(a+)(b+)")]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["cd"-"ef"-"gh"0]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["cd"-"ef"-"gh"1]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq["foo bar foo foo  foo"-{"offset": 0, "length": 11, "string": "foo bar foo", "captures": [{"offset": 4, "length": 3, "string": "bar", "name": "bar123"}]}-{"offset": 12, "length": 8, "string": "foo  foo", "captures": [{"offset": -1, "length": 0, "string": null, "name": "bar123"}]}]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[.[] | test("a b c # spaces are ignored"; "ix")-["xabcd", "ABC"]-true]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[["aaa","bbb"]--split(", *"; null)]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[capture("(?<a>[a-z]+)-(?<n>[0-9]+)")-"xyzzy-14"-{ "a": "xyzzy", "n": "14" }]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[match("foo")-"foo bar foo"-{"offset": 0, "length": 3, "string": "foo", "captures": []}]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[match(["foo", "ig"])-"foo bar FOO"-{"offset": 0, "length": 3, "string": "foo", "captures": []}]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[scan("c")-"abcdefabc"-"c"]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[splits(", *")-"ab,cd,   ef, gh"-"ab"]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[splits(",? *"; "n")-"ab,cd ef,  gh"-"ab"]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[true--match("(abc)+"; "g")]
+6321df1bd94e/tests.test_upstream_manonig.test_upstream_jq[{"offset": 8, "length": 3, "string": "FOO", "captures": []}--match("foo (?<bar123>bar)? foo"; "ig")]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq["a","b","c" | capture("(?<x>a)?b?")-null-{"x":"a"}]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq["a","b","c" | capture("(?<x>a?)?b?")-null-{"x":"a"}]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq["a","b","c" | match("(?<x>a)?b?")-null-{"offset":0,"length":1,"string":"a","captures":[{"offset":0,"length":1,"string":"a","name":"x"}]}]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq["a","b","c" | match("(?<x>a?)?b?")-null-{"offset":0,"length":1,"string":"a","captures":[{"offset":0,"length":1,"string":"a","name":"x"}]}]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[[match(".+?\\\\b")]-"a\u0304 two-codepoint grapheme"-[{"offset": 0, "length": 2, "string": "a\u0304", "captures":[]}]]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[[match("ba\u0304r")]-"a ba\u0304r"-[{"offset": 2, "length": 4, "string": "ba\u0304r", "captures":[]}]]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[[match("bar")]-"a\u0304 bar with a combining codepoint U+0304"-[{"offset": 3, "length": 3, "string": "bar", "captures":[]}]]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[[match(["(bar)"])]-"foo bar"-[{"offset": 4, "length": 3, "string": "bar", "captures":[{"offset": 4, "length": 3, "string": "bar", "name": null}]}]]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[[match(["foo (?<bar123>bar)? foo", "ig"])]-"foo bar foo foo  foo"-[{"offset": 0, "length": 11, "string": "foo bar foo", "captures":[{"offset": 4, "length": 3, "string": "bar", "name": "bar123"}]},{"offset":12, "length": 8, "string": "foo  foo", "captures":[{"offset": -1, "length": 0, "string": null, "name": "bar123"}]}]]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[{"offset":0,"length":1,"string":"b","captures":[{"offset":-1,"string":null,"length":0,"name":"x"}]}-{"offset":0,"length":0,"string":"","captures":[{"offset":-1,"string":null,"length":0,"name":"x"}]}-]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[{"offset":0,"length":1,"string":"b","captures":[{"offset":0,"string":"","length":0,"name":"x"}]}-{"offset":0,"length":0,"string":"","captures":[{"offset":0,"string":"","length":0,"name":"x"}]}-]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[{"x":""}-{"x":""}-]
+6321df1bd94e/tests.test_upstream_onig.test_upstream_jq[{"x":null}-{"x":null}-]
+6321df1bd94e/tests.test_upstream_uri.test_upstream_jq[@urid-"a%20%CE%BC%20%E2%88%B0%20%F0%9F%98%8E"-"a \\u03bc \\u2230 \\ud83d\\ude0e"]
+7281587dea3a/tests.test_absolute_final_70.test_env_variable_access
+7281587dea3a/tests.test_absolutely_final.test_combinations_empty
+7281587dea3a/tests.test_absolutely_final.test_delpaths_root
+7281587dea3a/tests.test_absolutely_final.test_indices_empty
+7281587dea3a/tests.test_additional_builtins.test_ascii_downcase_mixed
+7281587dea3a/tests.test_additional_builtins.test_gsub_with_flags
+7281587dea3a/tests.test_additional_builtins.test_splits_with_limit
+7281587dea3a/tests.test_additional_builtins.test_sub_with_flags
+7281587dea3a/tests.test_additional_builtins.test_test_with_flags
+7281587dea3a/tests.test_additional_builtins.test_tonumber_various
+7281587dea3a/tests.test_additional_builtins.test_tostring_various
+7281587dea3a/tests.test_basic_invocation.test_no_filter_needs_input
+7281587dea3a/tests.test_comprehensive_coverage.test_float_comparison
+7281587dea3a/tests.test_comprehensive_coverage.test_float_operations
+7281587dea3a/tests.test_comprehensive_coverage.test_float_precision
+7281587dea3a/tests.test_comprehensive_coverage.test_float_to_int
+7281587dea3a/tests.test_comprehensive_coverage.test_float_very_large
+7281587dea3a/tests.test_comprehensive_coverage.test_float_very_small
+7281587dea3a/tests.test_comprehensive_coverage.test_format_base64_unicode
+7281587dea3a/tests.test_comprehensive_coverage.test_format_sh_quotes
+7281587dea3a/tests.test_comprehensive_coverage.test_negative_floats
+7281587dea3a/tests.test_comprehensive_coverage.test_numbers_with_leading_zero
+7281587dea3a/tests.test_comprehensive_coverage.test_path_with_expression
+7281587dea3a/tests.test_comprehensive_coverage.test_try_with_alternative
+7281587dea3a/tests.test_coverage_boost.test_base64d_builtin
+7281587dea3a/tests.test_coverage_boost.test_complex_nested_expression
+7281587dea3a/tests.test_coverage_boost.test_env_builtin
+7281587dea3a/tests.test_coverage_boost.test_infinite_builtin
+7281587dea3a/tests.test_coverage_boost.test_infinity_arithmetic
+7281587dea3a/tests.test_coverage_boost.test_raw_string_literals
+7281587dea3a/tests.test_coverage_boost.test_text_builtin
+7281587dea3a/tests.test_coverage_boost_fixes.test_infinite_value
+7281587dea3a/tests.test_coverage_boost_fixes.test_try_fromjson
+7281587dea3a/tests.test_coverage_targeted.test_args_named
+7281587dea3a/tests.test_coverage_targeted.test_base64_decode
+7281587dea3a/tests.test_coverage_targeted.test_escaped_characters
+7281587dea3a/tests.test_coverage_targeted.test_first_n
+7281587dea3a/tests.test_coverage_targeted.test_html_encode
+7281587dea3a/tests.test_coverage_targeted.test_modulemeta
+7281587dea3a/tests.test_coverage_targeted.test_stream_errors_flag
+7281587dea3a/tests.test_coverage_targeted.test_text_format
+7281587dea3a/tests.test_coverage_targeted.test_try_no_catch
+7281587dea3a/tests.test_edge_case_final.test_alt_input
+7281587dea3a/tests.test_edge_case_final.test_alt_inputs
+7281587dea3a/tests.test_edge_case_final.test_format_base64_output
+7281587dea3a/tests.test_edge_case_final.test_format_base64d_output
+7281587dea3a/tests.test_edge_case_final.test_format_html_output
+7281587dea3a/tests.test_edge_case_final.test_format_sh_output
+7281587dea3a/tests.test_edge_case_final.test_format_uri_output
+7281587dea3a/tests.test_edge_case_final.test_infinite_constant
+7281587dea3a/tests.test_edge_case_final.test_tojson_encode
+7281587dea3a/tests.test_error_handling.test_invalid_recursive_descent
+7281587dea3a/tests.test_exhaustive_final.test_color_monochrome_flags
+7281587dea3a/tests.test_exhaustive_final.test_format_functions
+7281587dea3a/tests.test_exhaustive_final.test_math_logarithmic
+7281587dea3a/tests.test_exhaustive_final.test_math_trigonometric
+7281587dea3a/tests.test_exhaustive_final.test_special_characters
+7281587dea3a/tests.test_exhaustive_final.test_unicode_handling
+7281587dea3a/tests.test_extreme_cases.test_alternative_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_assignment_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_date_functions_edge
+7281587dea3a/tests.test_extreme_cases.test_del_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_empty_operations
+7281587dea3a/tests.test_extreme_cases.test_function_overloading
+7281587dea3a/tests.test_extreme_cases.test_large_numbers
+7281587dea3a/tests.test_extreme_cases.test_math_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_multiple_outputs_collection
+7281587dea3a/tests.test_extreme_cases.test_null_operations
+7281587dea3a/tests.test_extreme_cases.test_number_formats
+7281587dea3a/tests.test_extreme_cases.test_object_construction_edge
+7281587dea3a/tests.test_extreme_cases.test_pipe_with_empty
+7281587dea3a/tests.test_extreme_cases.test_regex_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_slicing_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_string_edge_cases
+7281587dea3a/tests.test_extreme_cases.test_string_operations_unicode
+7281587dea3a/tests.test_extreme_cases.test_type_errors
+7281587dea3a/tests.test_extreme_cases.test_variable_scoping
+7281587dea3a/tests.test_final_70_absolute.test_length_boolean
+7281587dea3a/tests.test_final_70_absolute.test_max_empty
+7281587dea3a/tests.test_final_70_absolute.test_min_empty
+7281587dea3a/tests.test_final_70_absolute.test_number_arithmetic_overflow
+7281587dea3a/tests.test_final_70_absolute.test_number_underflow
+7281587dea3a/tests.test_final_70_absolute.test_optional_on_error
+7281587dea3a/tests.test_final_70_absolute.test_tonumber_invalid
+7281587dea3a/tests.test_final_70_absolute.test_tostring_array
+7281587dea3a/tests.test_final_70_absolute.test_type_error_addition
+7281587dea3a/tests.test_final_70_absolute.test_type_error_comparison
+7281587dea3a/tests.test_final_70_absolute.test_very_small_number
+7281587dea3a/tests.test_final_coverage_push.test_atan2_function
+7281587dea3a/tests.test_final_coverage_push.test_division_by_zero
+7281587dea3a/tests.test_final_coverage_push.test_env_builtin
+7281587dea3a/tests.test_final_coverage_push.test_first_empty
+7281587dea3a/tests.test_final_coverage_push.test_format_builtin
+7281587dea3a/tests.test_final_coverage_push.test_getpath_array
+7281587dea3a/tests.test_final_coverage_push.test_infinite_value
+7281587dea3a/tests.test_final_coverage_push.test_isinfinite_function
+7281587dea3a/tests.test_final_coverage_push.test_isnan_function
+7281587dea3a/tests.test_final_coverage_push.test_json_with_trailing_garbage
+7281587dea3a/tests.test_final_coverage_push.test_limit_negative
+7281587dea3a/tests.test_final_coverage_push.test_multiple_json_values
+7281587dea3a/tests.test_final_coverage_push.test_range_infinite
+7281587dea3a/tests.test_final_final_70.test_addition_null
+7281587dea3a/tests.test_final_final_70.test_base32_if_available
+7281587dea3a/tests.test_final_final_70.test_comparison_different_types
+7281587dea3a/tests.test_final_final_70.test_division_null
+7281587dea3a/tests.test_final_final_70.test_empty_in_object
+7281587dea3a/tests.test_final_final_70.test_multiplication_null
+7281587dea3a/tests.test_final_final_70.test_optional_array_index
+7281587dea3a/tests.test_final_final_70.test_range_with_zero_step
+7281587dea3a/tests.test_final_final_70.test_subtraction_null
+7281587dea3a/tests.test_final_push.test_exit_status_with_any
+7281587dea3a/tests.test_final_push.test_implode_emoji
+7281587dea3a/tests.test_final_push.test_library_path_nonexistent
+7281587dea3a/tests.test_final_push.test_monochrome_with_complex
+7281587dea3a/tests.test_final_push.test_rawfile_multiple
+7281587dea3a/tests.test_final_push.test_seq_output
+7281587dea3a/tests.test_final_push.test_splits_empty
+7281587dea3a/tests.test_final_push.test_stream_errors
+7281587dea3a/tests.test_get_to_70.test_first_empty
+7281587dea3a/tests.test_get_to_70.test_last_empty
+7281587dea3a/tests.test_input_handling.test_empty_input_with_filter
+7281587dea3a/tests.test_last_final_70.test_escaped_string
+7281587dea3a/tests.test_last_final_70.test_recursive_descent
+7281587dea3a/tests.test_lexer_parser_coverage.test_alternative_operator
+7281587dea3a/tests.test_lexer_parser_coverage.test_args_access
+7281587dea3a/tests.test_lexer_parser_coverage.test_arithmetic_operators
+7281587dea3a/tests.test_lexer_parser_coverage.test_array_comprehension_style
+7281587dea3a/tests.test_lexer_parser_coverage.test_array_literals
+7281587dea3a/tests.test_lexer_parser_coverage.test_assignment_operators
+7281587dea3a/tests.test_lexer_parser_coverage.test_builtin_functions
+7281587dea3a/tests.test_lexer_parser_coverage.test_comparison_operators
+7281587dea3a/tests.test_lexer_parser_coverage.test_complex_filter_chain
+7281587dea3a/tests.test_lexer_parser_coverage.test_empty_structures
+7281587dea3a/tests.test_lexer_parser_coverage.test_empty_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_env_access
+7281587dea3a/tests.test_lexer_parser_coverage.test_error_function
+7281587dea3a/tests.test_lexer_parser_coverage.test_filter_comma
+7281587dea3a/tests.test_lexer_parser_coverage.test_filter_pipe
+7281587dea3a/tests.test_lexer_parser_coverage.test_filter_syntax_brackets
+7281587dea3a/tests.test_lexer_parser_coverage.test_filter_syntax_dot
+7281587dea3a/tests.test_lexer_parser_coverage.test_filter_syntax_optional
+7281587dea3a/tests.test_lexer_parser_coverage.test_foreach_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_format_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_function_definition
+7281587dea3a/tests.test_lexer_parser_coverage.test_if_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_limit_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_logical_operators
+7281587dea3a/tests.test_lexer_parser_coverage.test_map_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_multiple_pipes
+7281587dea3a/tests.test_lexer_parser_coverage.test_nested_function_calls
+7281587dea3a/tests.test_lexer_parser_coverage.test_number_formats_decimal
+7281587dea3a/tests.test_lexer_parser_coverage.test_number_formats_exponent
+7281587dea3a/tests.test_lexer_parser_coverage.test_number_formats_negative
+7281587dea3a/tests.test_lexer_parser_coverage.test_object_comprehension_style
+7281587dea3a/tests.test_lexer_parser_coverage.test_object_literals
+7281587dea3a/tests.test_lexer_parser_coverage.test_range_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_recursive_descent
+7281587dea3a/tests.test_lexer_parser_coverage.test_reduce_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_repeat_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_select_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_slicing_operations
+7281587dea3a/tests.test_lexer_parser_coverage.test_string_literals
+7281587dea3a/tests.test_lexer_parser_coverage.test_try_catch_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_until_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_variable_syntax
+7281587dea3a/tests.test_lexer_parser_coverage.test_while_syntax
+7281587dea3a/tests.test_more_coverage.test_ascii_downcase
+7281587dea3a/tests.test_more_coverage.test_color_output
+7281587dea3a/tests.test_more_coverage.test_empty_input
+7281587dea3a/tests.test_more_coverage.test_exit_status_success
+7281587dea3a/tests.test_more_coverage.test_monochrome_output
+7281587dea3a/tests.test_more_coverage.test_null_character_in_string
+7281587dea3a/tests.test_more_coverage.test_unicode_strings
+7281587dea3a/tests.test_more_coverage.test_very_nested_object
+7281587dea3a/tests.test_more_variations.test_abs_variations
+7281587dea3a/tests.test_more_variations.test_add_variations
+7281587dea3a/tests.test_more_variations.test_boolean_combinations
+7281587dea3a/tests.test_more_variations.test_comparison_combinations
+7281587dea3a/tests.test_more_variations.test_decimal_variations
+7281587dea3a/tests.test_more_variations.test_flatten_depths
+7281587dea3a/tests.test_more_variations.test_floor_ceil_round_variations
+7281587dea3a/tests.test_more_variations.test_group_by_variations
+7281587dea3a/tests.test_more_variations.test_has_variations
+7281587dea3a/tests.test_more_variations.test_indices_variations
+7281587dea3a/tests.test_more_variations.test_join_variations
+7281587dea3a/tests.test_more_variations.test_keys_variations
+7281587dea3a/tests.test_more_variations.test_ltrimstr_variations
+7281587dea3a/tests.test_more_variations.test_map_iterations
+7281587dea3a/tests.test_more_variations.test_math_operations_combinations
+7281587dea3a/tests.test_more_variations.test_min_max_variations
+7281587dea3a/tests.test_more_variations.test_negative_numbers
+7281587dea3a/tests.test_more_variations.test_numbers_0_to_100
+7281587dea3a/tests.test_more_variations.test_range_variations
+7281587dea3a/tests.test_more_variations.test_reverse_variations
+7281587dea3a/tests.test_more_variations.test_rtrimstr_variations
+7281587dea3a/tests.test_more_variations.test_scientific_notation_variations
+7281587dea3a/tests.test_more_variations.test_select_various
+7281587dea3a/tests.test_more_variations.test_sort_variations
+7281587dea3a/tests.test_more_variations.test_split_variations
+7281587dea3a/tests.test_more_variations.test_sqrt_variations
+7281587dea3a/tests.test_more_variations.test_tonumber_variations
+7281587dea3a/tests.test_more_variations.test_tostring_variations
+7281587dea3a/tests.test_more_variations.test_unique_variations
+7281587dea3a/tests.test_more_variations.test_values_variations
+7281587dea3a/tests.test_output_formatting.test_color_output
+7281587dea3a/tests.test_output_formatting.test_custom_indentation
+7281587dea3a/tests.test_output_formatting.test_raw_output
+7281587dea3a/tests.test_push_70_final.test_format_text
+7281587dea3a/tests.test_push_70_final.test_streaming_with_large_object
+7281587dea3a/tests.test_push_to_70_now.test_first_with_empty
+7281587dea3a/tests.test_push_to_70_now.test_number_addition_precision
+7281587dea3a/tests.test_push_to_70_now.test_number_max_safe_integer
+7281587dea3a/tests.test_push_to_70_now.test_number_very_large_exponent
+7281587dea3a/tests.test_push_to_70_now.test_number_very_small_exponent
+7281587dea3a/tests.test_push_to_70_now.test_reverse_string
+7281587dea3a/tests.test_push_to_70_now.test_sort_by_null_values
+7281587dea3a/tests.test_push_to_70_now.test_sort_mixed_types
+7281587dea3a/tests.test_push_to_70_now.test_unique_mixed_types
+7281587dea3a/tests.test_reach_70_percent.test_complex_arithmetic_expression
+7281587dea3a/tests.test_reach_70_percent.test_format_json
+7281587dea3a/tests.test_reach_70_percent.test_hyperbolic_functions
+7281587dea3a/tests.test_reach_70_percent.test_inverse_trig
+7281587dea3a/tests.test_reach_70_percent.test_modulo_with_negative
+7281587dea3a/tests.test_reach_70_percent.test_reduce_with_index
+7281587dea3a/tests.test_reach_70_percent.test_trig_pi_values
+7281587dea3a/tests.test_stream_fixed.test_seq_format_simple
+7281587dea3a/tests.test_string_interpolation.test_at_text
+7281587dea3a/tests.test_uncovered_builtins.test_arithmetic_edge_cases
+7281587dea3a/tests.test_uncovered_builtins.test_array_edge_cases
+7281587dea3a/tests.test_uncovered_builtins.test_format_builtin_variations
+7281587dea3a/tests.test_uncovered_builtins.test_get_jq_origin
+7281587dea3a/tests.test_uncovered_builtins.test_get_prog_origin
+7281587dea3a/tests.test_uncovered_builtins.test_get_search_list
+7281587dea3a/tests.test_uncovered_builtins.test_input_filename
+7281587dea3a/tests.test_uncovered_builtins.test_input_line_number
+7281587dea3a/tests.test_uncovered_builtins.test_localtime_builtin
+7281587dea3a/tests.test_uncovered_builtins.test_modulemeta_builtin
+7281587dea3a/tests.test_uncovered_builtins.test_stderr_builtin
+7281587dea3a/tests.test_uncovered_builtins.test_utf8bytelength_builtin
+7281587dea3a/tests.test_unicode_and_parsing.test_emoji_in_string
+7281587dea3a/tests.test_unicode_and_parsing.test_multiple_format_operations
+7281587dea3a/tests.test_unicode_and_parsing.test_null_character_in_string
+7281587dea3a/tests.test_unicode_and_parsing.test_surrogate_pairs
+7281587dea3a/tests.test_unicode_and_parsing.test_unicode_string
+8d51d6af7580/tests.test_advanced.TestSeq.test_seq_mode
+8d51d6af7580/tests.test_basic.TestIdentityFilter.test_identity_pretty_print
+8d51d6af7580/tests.test_cli_options.TestColorOutput.test_color_flag_exists
+8d51d6af7580/tests.test_cli_options.TestColorOutput.test_monochrome_flag_exists
+8d51d6af7580/tests.test_cli_options.TestExitStatus.test_exit_status_with_output
+8d51d6af7580/tests.test_cli_options.TestRawOutput.test_raw_output_string
+8d51d6af7580/tests.test_edge_cases.TestNumberEdgeCases.test_infinity_handled_as_large_number
+8d51d6af7580/tests.test_edge_cases.TestNumberEdgeCases.test_large_number
+8d51d6af7580/tests.test_edge_cases.TestNumberEdgeCases.test_negative_scientific
+8d51d6af7580/tests.test_edge_cases.TestNumberEdgeCases.test_scientific_notation
+8d51d6af7580/tests.test_edge_cases.TestOutputFormatting.test_trailing_newline
+8d51d6af7580/tests.test_exact_output.TestExactOutput.test_build_configuration
+8d51d6af7580/tests.test_exact_output.TestExactOutput.test_help_output_exact
+8d51d6af7580/tests.test_exact_output.TestExactOutput.test_version_output_exact
+8d51d6af7580/tests.test_exact_output.TestExitCodes.test_exit_code_success
+8d51d6af7580/tests.test_exact_output.TestWhitespace.test_no_trailing_spaces
+8d51d6af7580/tests.test_formats.TestCsv.test_csv_quotes_in_data
+8d51d6af7580/tests.test_formats.TestSh.test_sh_special_chars
+9130f7b96d1f/eval.tests.test_additional_coverage
+9130f7b96d1f/eval.tests.test_advanced_features
+9130f7b96d1f/eval.tests.test_arithmetic_logic
+9130f7b96d1f/eval.tests.test_basic_operations
+9130f7b96d1f/eval.tests.test_builtin_functions
+9130f7b96d1f/eval.tests.test_corrections
+9130f7b96d1f/eval.tests.test_datetime_functions
+9130f7b96d1f/eval.tests.test_error_handling
+9130f7b96d1f/eval.tests.test_final_fixes
+9130f7b96d1f/eval.tests.test_fixes
+9130f7b96d1f/eval.tests.test_input_options
+9130f7b96d1f/eval.tests.test_math_functions
+9130f7b96d1f/eval.tests.test_missing_features
+9130f7b96d1f/eval.tests.test_output_formatting
+9130f7b96d1f/eval.tests.test_string_functions
+9130f7b96d1f/eval.tests.test_type_constructors
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestArgsMode.test_args_mode_basic
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestArgsMode.test_args_mode_requires_filter
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestArgsMode.test_args_mode_with_filter
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestArgumentParsing.test_double_dash_separator
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestArgumentParsing.test_filter_starting_with_dash
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestExitStatusMode.test_exit_status_with_output
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestExitStatusMode.test_exit_status_with_true
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestFileOperations.test_rawfile_flag
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestFileOperations.test_slurpfile_flag
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestFlagOrdering.test_flag_after_filter
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestFlagOrdering.test_flag_before_filter
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestFlagOrdering.test_multiple_flags_before_filter
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestGlobalFlags.test_monochrome_flag[--monochrome-output]
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestGlobalFlags.test_monochrome_flag[-M]
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestGlobalFlags.test_raw_output_flag[--raw-output]
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestGlobalFlags.test_raw_output_flag[-r]
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestGlobalFlags.test_sort_keys_flag[--sort-keys]
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestGlobalFlags.test_sort_keys_flag[-S]
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestInformationalModes.test_build_configuration_mode
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestJsonArgsMode.test_jsonargs_mode_basic
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestJsonArgsMode.test_jsonargs_mode_requires_filter
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestModeConflicts.test_args_and_jsonargs_conflict
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestModeConflicts.test_multiple_help_flags
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestNoInputMode.test_build_config_no_input
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestOutputModes.test_compact_vs_pretty
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestOutputModes.test_indent_flag
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestOutputModes.test_join_output
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestOutputModes.test_tab_indentation
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestStreamingModes.test_seq_flag
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestStreamingModes.test_slurp_flag
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestStreamingModes.test_stream_flag
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestVariableFlags.test_arg_flag_requires_name_and_value
+9f17628fa1d1/eval.tests.test_mode_dispatch.TestVariableFlags.test_multiple_arg_flags
+ff26b33afe1a/tests.test_cli.test_monochrome_output
+ff26b33afe1a/tests.test_cli_gaps.test_build_configuration_flag
+ff26b33afe1a/tests.test_cli_gaps.test_library_path_with_value
+ff26b33afe1a/tests.test_cli_gaps.test_multiple_library_paths
+ff26b33afe1a/tests.test_execute_comprehensive.test_getpath_with_invalid_path_element
+ff26b33afe1a/tests.test_harvest.test_jq_native_suite[jq:L2325:.[]|(try . catch (if .=="ho" then "BROKE...]
+ff26b33afe1a/tests.test_harvest.test_jq_native_suite[jq:L936:.[] | . as {a:$a} ?// {a:$a} ?// {a:$a} ...]
+ff26b33afe1a/tests.test_harvest.test_jq_native_suite[jq:L940:.[] as {a:$a} ?// {a:$a} ?// {a:$a} | $a]
+ff26b33afe1a/tests.test_harvest.test_jq_native_suite[jq:L944:[[3],[4],[5],6][] | . as {a:$a} ?// {a:$...]
+ff26b33afe1a/tests.test_harvest.test_jq_native_suite[jq:L948:[[3],[4],[5],6] | .[] as {a:$a} ?// {a:$...]
+ff26b33afe1a/tests.test_regex_oniguruma_errors.test_char_class_shortcut_at_start_accepted
+ff26b33afe1a/tests.test_regex_oniguruma_errors.test_incomplete_repeat_range_treated_as_literal
+ff26b33afe1a/tests.test_regex_oniguruma_errors.test_invalid_group_option_combination_accepted
+ff26b33afe1a/tests.test_regex_oniguruma_errors.test_lone_brace_treated_as_literal
+ff26b33afe1a/tests.test_regex_oniguruma_errors.test_nested_repeat_operator_valid_case
+ff26b33afe1a/tests.test_util_gaps.test_strptime_epoch_overflow_detection
