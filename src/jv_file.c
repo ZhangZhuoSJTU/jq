@@ -57,6 +57,8 @@ jv jv_load_file(const char* filename, int raw) {
 
     if (raw) {
       data = jv_string_append_buf(data, buf, n);
+      if (!jv_is_valid(data))
+        break;
     } else {
       jv_parser_set_buf(parser, buf, n, !feof(file));
       jv value;
@@ -67,6 +69,7 @@ jv jv_load_file(const char* filename, int raw) {
         data = value;
         break;
       }
+      jv_free(value);
     }
   }
   if (!raw)
