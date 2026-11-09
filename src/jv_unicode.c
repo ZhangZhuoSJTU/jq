@@ -3,11 +3,23 @@
 #include "jv_unicode.h"
 #include "jv_utf8_tables.h"
 
-// jvp_utf8_backtrack returns the beginning of the last codepoint in the
-// string, assuming that start is the last byte in the string.
-// If the last codepoint is incomplete, returns the number of missing bytes via
-// *missing_bytes.  If there are no leading bytes or an invalid byte is
-// encountered, NULL is returned and *missing_bytes is not altered.
+/*
+ * UTF-8 stream utilities.
+ *
+ * These helpers validate and iterate over UTF-8 encoded byte sequences.
+ * They are used throughout the jv string layer to ensure that string
+ * values are always well-formed UTF-8.
+ */
+
+/*
+ * jvp_utf8_backtrack - find the start of the last codepoint.
+ *
+ * Walk backwards from `start` (the last byte) toward `min`, counting
+ * continuation bytes until a leading byte is found. Returns a pointer
+ * to the leading byte, or NULL if the sequence is malformed. When the
+ * final codepoint is truncated, *missing_bytes receives the number of
+ * continuation bytes that are absent.
+ */
 const char* jvp_utf8_backtrack(const char* start, const char* min, int *missing_bytes) {
   assert(min <= start);
   if (min == start) {
@@ -15,8 +27,7 @@ const char* jvp_utf8_backtrack(const char* start, const char* min, int *missing_
   }
   int length = 0;
   int seen = 1;
-  while ((length = utf8_coding_length[(unsigned char)*start]) == UTF8_CONTINUATION_BYTE) {
-    if (start == min) break;
+  while (start >= min && (length = utf8_coding_length[(unsigned char)*start]) == UTF8_CONTINUATION_BYTE) {
     start--;
     seen++;
   }
@@ -42,7 +53,7 @@ const char* jvp_utf8_next(const char* in, const char* end, int* codepoint_ret) {
   } else if (length == 0 || length == UTF8_CONTINUATION_BYTE) {
     /* Bad single byte - either an invalid byte or an out-of-place continuation byte */
     length = 1;
-  } else if (length > end - in) {
+  } else if (in + length > end) {
     /* String ends before UTF8 sequence ends */
     length = end - in;
   } else {

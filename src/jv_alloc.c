@@ -138,6 +138,17 @@ static void memory_exhausted(void) {
 #endif /* USE_TLS */
 
 
+/*
+ * Guarded allocation wrappers.
+ *
+ * The _unguarded variants return NULL on failure (useful when the caller
+ * can handle OOM gracefully). The guarded variants abort via
+ * memory_exhausted() — appropriate when the caller has no recovery path.
+ *
+ * jv_mem_calloc asserts that both arguments are positive: a zero-element
+ * or zero-size calloc is always a bug in jq.
+ */
+
 void* jv_mem_alloc(size_t sz) {
   void* p = malloc(sz);
   if (!p) {
