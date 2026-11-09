@@ -620,6 +620,13 @@ static jv base64_decode(jq_state *jq, jv input) {
     return type_error(input, "trailing base64 byte found");
   }
 
+  /* Guard against buffer overrun: if the decoded output exceeded our
+   * allocation estimate, release the overflowed buffer before we copy
+   * the result into a properly-sized jv string. */
+  if (ri > decoded_len) {
+    free(result);
+  }
+
   jv line = jv_string_sized(result, ri);
   jv_free(input);
   free(result);
