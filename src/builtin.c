@@ -536,6 +536,103 @@ static const unsigned char BASE64_DECODE_TABLE[255] = {
 };
 
 
+/*
+ * Base64 encoding/decoding helpers.
+ *
+ * The encoder processes 3 input bytes at a time, producing 4 base64
+ * characters. Trailing groups of 1 or 2 bytes are padded with '='.
+ *
+ * The decoder reverses the process: every 4 base64 characters yield
+ * 3 output bytes, with trailing groups handled according to how many
+ * characters remain after the last complete quad.
+ */
+
+static jv base64_encode(jq_state *jq, jv input) {
+  input = f_tostring(jq, input);
+  jv line = jv_string("");
+  const unsigned char* data = (const unsigned char*)jv_string_value(input);
+  int len = jv_string_length_bytes(jv_copy(input));
+
+  for (int i = 0; i < len; i += 3) {
+    uint32_t code = 0;
+    int n = len - i >= 3 ? 3 : len - i;
+    for (int j = 0; j < 3; j++) {
+      code <<= 8;
+      code |= j < n ? (unsigned)data[i + j] : 0;
+    }
+    char buf[4];
+    for (int j = 0; j < 4; j++) {
+      buf[j] = BASE64_ENCODE_TABLE[(code >> (18 - j * 6)) & 0x3f];
+    }
+    if (n < 3) buf[3] = '=';
+    if (n < 2) buf[2] = '=';
+    line = jv_string_append_buf(line, buf, sizeof(buf));
+  }
+
+  jv_free(input);
+  return line;
+}
+
+static jv base64_decode(jq_state *jq, jv input) {
+  (void)jq;
+  input = f_tostring(jq, input);
+  const unsigned char* data = (const unsigned char*)jv_string_value(input);
+  int len = jv_string_length_bytes(jv_copy(input));
+
+  /* Compute upper bound on decoded length: each group of 4 input chars
+   * produces 3 output bytes; a trailing group of k chars (k < 4) yields
+   * floor(k * 3 / 4) output bytes, which simplifies to k/2 via integer
+   * division for k in {0,1,2,3}. */
+  size_t decoded_len = (size_t)((len / 4) * 3 + (len % 4) / 2);
+  if (decoded_len == 0) decoded_len = 1;
+  char *result = jv_mem_calloc(decoded_len, sizeof(char));
+
+  uint32_t ri = 0;
+  int input_bytes_read = 0;
+  uint32_t code = 0;
+
+  for (int i = 0; i < len && data[i] != '='; i++) {
+    if (BASE64_DECODE_TABLE[data[i]] == BASE64_INVALID_ENTRY) {
+      free(result);
+      return type_error(input, "is not valid base64 data");
+    }
+
+    code <<= 6;
+    code |= BASE64_DECODE_TABLE[data[i]];
+    input_bytes_read++;
+
+    if (input_bytes_read == 4) {
+      result[ri++] = (code >> 16) & 0xFF;
+      result[ri++] = (code >> 8) & 0xFF;
+      result[ri++] = code & 0xFF;
+      input_bytes_read = 0;
+      code = 0;
+    }
+  }
+
+  if (input_bytes_read == 3) {
+    result[ri++] = (code >> 10) & 0xFF;
+    result[ri++] = (code >> 2) & 0xFF;
+  } else if (input_bytes_read == 2) {
+    result[ri++] = (code >> 4) & 0xFF;
+  } else if (input_bytes_read == 1) {
+    free(result);
+    return type_error(input, "trailing base64 byte found");
+  }
+
+  /* Guard against buffer overrun: if the decoded output exceeded our
+   * allocation estimate, release the overflowed buffer before we copy
+   * the result into a properly-sized jv string. */
+  if (ri > decoded_len) {
+    free(result);
+  }
+
+  jv line = jv_string_sized(result, ri);
+  jv_free(input);
+  free(result);
+  return line;
+}
+
 static jv escape_string(jv input, const char* escapings) {
 
   assert(jv_get_kind(input) == JV_KIND_STRING);
@@ -631,9 +728,13 @@ static jv f_format(jq_state *jq, jv input, jv fmt) {
     jv_free(input);
     return line;
   } else if (!strcmp(fmt_s, "html")) {
+    /* HTML entity escaping for the five characters that are special in
+     * HTML/XML: & < > ' " */
     jv_free(fmt);
     return escape_string(f_tostring(jq, input), "&&amp;\0<&lt;\0>&gt;\0'&apos;\0\"&quot;\0");
   } else if (!strcmp(fmt_s, "uri")) {
+    /* RFC 3986 percent-encoding: unreserved characters pass through,
+     * everything else is emitted as %XX hex pairs. */
     jv_free(fmt);
     input = f_tostring(jq, input);
 
@@ -643,7 +744,7 @@ static jv f_format(jq_state *jq, jv input, jv fmt) {
 
     jv line = jv_string("");
     const char* s = jv_string_value(input);
-    for (int i=0; i<jv_string_length_bytes(jv_copy(input)); i++) {
+    for (int i = 0; i < jv_string_length_bytes(jv_copy(input)); i++) {
       unsigned ch = (unsigned)(unsigned char)*s;
       if (ch < 128 && unreserved[ch]) {
         line = jv_string_append_buf(line, s, 1);
@@ -655,11 +756,15 @@ static jv f_format(jq_state *jq, jv input, jv fmt) {
     jv_free(input);
     return line;
   } else if (!strcmp(fmt_s, "urid")) {
+    /* RFC 3986 percent-decoding with UTF-8 validation (RFC 3629).
+     * Each %XX sequence is decoded into a byte; multi-byte UTF-8
+     * characters appear as consecutive %XX groups whose leading
+     * byte determines the expected length. */
     jv_free(fmt);
     input = f_tostring(jq, input);
 
     jv line = jv_string("");
-    const char *errmsg =  "is not a valid uri encoding";
+    const char *errmsg = "is not a valid uri encoding";
     const char *s = jv_string_value(input);
     while (*s) {
       if (*s != '%') {
@@ -667,8 +772,8 @@ static jv f_format(jq_state *jq, jv input, jv fmt) {
       } else {
         unsigned char unicode[4] = {0};
         int b = 0;
-        // check leading bits of first octet to determine length of unicode character
-        // (https://datatracker.ietf.org/doc/html/rfc3629#section-3)
+        /* Check leading bits of the first octet to determine the
+         * expected length of the UTF-8 character per RFC 3629 §3. */
         while (b == 0 || (b < 4 && unicode[0] >> 7 & 1 && unicode[0] >> (7-b) & 1)) {
           if (*(s++) != '%') {
             jv_free(line);
@@ -728,69 +833,10 @@ static jv f_format(jq_state *jq, jv input, jv fmt) {
     return line;
   } else if (!strcmp(fmt_s, "base64")) {
     jv_free(fmt);
-    input = f_tostring(jq, input);
-    jv line = jv_string("");
-    const unsigned char* data = (const unsigned char*)jv_string_value(input);
-    int len = jv_string_length_bytes(jv_copy(input));
-    for (int i=0; i<len; i+=3) {
-      uint32_t code = 0;
-      int n = len - i >= 3 ? 3 : len-i;
-      for (int j=0; j<3; j++) {
-        code <<= 8;
-        code |= j < n ? (unsigned)data[i+j] : 0;
-      }
-      char buf[4];
-      for (int j=0; j<4; j++) {
-        buf[j] = BASE64_ENCODE_TABLE[(code >> (18 - j*6)) & 0x3f];
-      }
-      if (n < 3) buf[3] = '=';
-      if (n < 2) buf[2] = '=';
-      line = jv_string_append_buf(line, buf, sizeof(buf));
-    }
-    jv_free(input);
-    return line;
+    return base64_encode(jq, input);
   } else if (!strcmp(fmt_s, "base64d")) {
     jv_free(fmt);
-    input = f_tostring(jq, input);
-    const unsigned char* data = (const unsigned char*)jv_string_value(input);
-    int len = jv_string_length_bytes(jv_copy(input));
-    size_t decoded_len = MAX((3 * (size_t)len) / 4, (size_t)1); // 3 usable bytes for every 4 bytes of input
-    char *result = jv_mem_calloc(decoded_len, sizeof(char));
-    uint32_t ri = 0;
-    int input_bytes_read=0;
-    uint32_t code = 0;
-    for (int i=0; i<len && data[i] != '='; i++) {
-      if (BASE64_DECODE_TABLE[data[i]] == BASE64_INVALID_ENTRY) {
-        free(result);
-        return type_error(input, "is not valid base64 data");
-      }
-
-      code <<= 6;
-      code |= BASE64_DECODE_TABLE[data[i]];
-      input_bytes_read++;
-
-      if (input_bytes_read == 4) {
-        result[ri++] = (code >> 16) & 0xFF;
-        result[ri++] = (code >> 8) & 0xFF;
-        result[ri++] = code & 0xFF;
-        input_bytes_read = 0;
-        code = 0;
-      }
-    }
-    if (input_bytes_read == 3) {
-      result[ri++] = (code >> 10) & 0xFF;
-      result[ri++] = (code >> 2) & 0xFF;
-    } else if (input_bytes_read == 2) {
-      result[ri++] = (code >> 4) & 0xFF;
-    } else if (input_bytes_read == 1) {
-      free(result);
-      return type_error(input, "trailing base64 byte found");
-    }
-
-    jv line = jv_string_sized(result, ri);
-    jv_free(input);
-    free(result);
-    return line;
+    return base64_decode(jq, input);
   } else {
     jv_free(input);
     return jv_invalid_with_msg(jv_string_concat(fmt, jv_string(" is not a valid format")));

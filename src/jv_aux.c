@@ -7,17 +7,31 @@
 #include "jv_alloc.h"
 #include "jv_private.h"
 
-// making this static verbose function here
-// until we introduce a less confusing naming scheme
-// of jv_* API with regards to the memory management
+/*
+ * Extract a double from a jv number and free it in one step.
+ *
+ * Many callers need the numeric value exactly once, then discard the jv
+ * wrapper. This helper avoids leaving a dangling jv_free() for the caller
+ * to forget.
+ *
+ * TODO: revisit once we settle on a naming convention that makes the
+ * ownership transfer clearer in the public jv_* API.
+ */
 static double jv_number_get_value_and_consume(jv number) {
   double value = jv_number_value(number);
   jv_free(number);
   return value;
 }
 
+/*
+ * Parse a slice object {"start": N, "end": M} against array/string j.
+ *
+ * Clamps indices to [0, len] and converts negative indices to positive
+ * ones relative to the end (Python-style). On success, *pstart and *pend
+ * hold the clamped bounds and jv_true() is returned; on type error, a
+ * descriptive jv error is returned and *pstart/*pend are undefined.
+ */
 static jv parse_slice(jv j, jv slice, int* pstart, int* pend) {
-  // Array slices
   jv start_jv = jv_object_get(jv_copy(slice), jv_string("start"));
   jv end_jv = jv_object_get(slice, jv_string("end"));
   if (jv_get_kind(start_jv) == JV_KIND_NULL) {
